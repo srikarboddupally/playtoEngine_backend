@@ -166,8 +166,8 @@ class PayoutCreateView(APIView):
                 {'error': str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        except Exception as e:
-            logger.error(f"Unexpected error creating payout: {e}")
+        except Exception:
+            logger.exception("Unexpected error creating payout")
             return Response(
                 {'error': 'Internal server error'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
