@@ -28,9 +28,9 @@ def sim_bank_statements():
         return 'processing'
 
 
-@shared_task
+@shared_task(bind=True, max_retries=3)
 def process_payout(self, payout_id):
-    logger.info(f"processing payout {payout_id} - attempt {self.request.retries + 1}")
+    logger.info(f"Processing payout {payout_id} - attempt {self.request.retries + 1}")
 
 
     try:
@@ -53,7 +53,7 @@ def process_payout(self, payout_id):
                 )
                 return
             
-            payout.transition_to(Payout.PROCESSING, metadeta={
+            payout.transition_to(Payout.PROCESSING, metadata={
                 'attempt' : self.request.retries + 1,
                 'worker_id' : self.request.hostname or 'unknown',
             })
@@ -251,7 +251,6 @@ def retry_stuck_payouts():
                     str(payout.id),
                     reason="Timed out after maximum retry attempts"
                 )
-
 
 
 
