@@ -295,10 +295,20 @@ def get_merchant_balance(merchant_id):
     total = merchant.get_total_balance()
     held = merchant.get_held_balance()
     available = merchant.get_available_balance()
+    bank_accounts = merchant.bank_accounts.filter(is_active=True).order_by('created_at')
 
     return {
         'merchant_id': str(merchant.id),
         'merchant_name': merchant.name,
+        'bank_accounts': [
+            {
+                'id': str(bank.id),
+                'account_holder_name': bank.account_holder_name,
+                'account_number_last4': bank.account_number[-4:],
+                'ifsc_code': bank.ifsc_code,
+            }
+            for bank in bank_accounts
+        ],
         'total_balance_paise': total,
         'held_balance_paise': held,
         'available_balance_paise': available,
