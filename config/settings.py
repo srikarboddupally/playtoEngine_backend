@@ -140,3 +140,12 @@ CELERY_BEAT_SCHEDULE = {
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# In INSTALLED_APPS third party section
+'corsheaders',
+
+# In MIDDLEWARE — must be BEFORE CommonMiddleware
+'corsheaders.middleware.CorsMiddleware',
+
+# At the bottom
+CORS_ALLOW_ALL_ORIGINS = True
