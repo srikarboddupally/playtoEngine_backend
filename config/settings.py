@@ -24,6 +24,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'corsheaders',
     'rest_framework',
     'django_celery_beat',
 ]
@@ -38,6 +39,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -140,12 +142,5 @@ CELERY_BEAT_SCHEDULE = {
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# In INSTALLED_APPS third party section
-'corsheaders',
-
-# In MIDDLEWARE — must be BEFORE CommonMiddleware
-'corsheaders.middleware.CorsMiddleware',
-
 # At the bottom
 CORS_ALLOW_ALL_ORIGINS = True
