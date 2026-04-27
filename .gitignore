@@ -5,3 +5,6 @@ __pycache__/
 *.sqlite3
 .DS_Store
 staticfiles/
+.vscode/
+.codex
+e';
